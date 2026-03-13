@@ -61,10 +61,31 @@
 
         .nav-controls { display: flex; align-items: center; gap: 12px; }
         .social-links { display: flex; align-items: center; gap: 10px; }
-        .social-links a { color: var(--text-primary); opacity: 0.8; transition: opacity 0.2s; }
+        .social-links a { color: var(--text-primary); opacity: 0.8; transition: opacity 0.2s; display: flex; align-items: center; text-decoration: none; }
         .social-links svg { width: 18px; height: 18px; }
+        
+        .address-link { 
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px; 
+            font-weight: 700; 
+            color: var(--text-primary); 
+            text-decoration: none; 
+            opacity: 0.8; 
+            border-right: 1px solid var(--border-color); 
+            padding-right: 10px; 
+            margin-right: 5px; 
+            transition: opacity 0.2s;
+        }
+        .address-link:hover { opacity: 1; }
+        .address-link svg { width: 12px; height: 12px; }
 
-        /* --- CATEGORIES (Centered & Mobile Fluid) --- */
+        @media (max-width: 480px) {
+            .address-link { display: none; }
+        }
+
+        /* --- CATEGORIES --- */
         .category-nav-wrapper {
             width: 100%;
             overflow: hidden;
@@ -118,7 +139,7 @@
             .section-title { text-align: center; font-size: 1.8rem; }
         }
 
-        /* --- PRODUCT GRID (2 Columns Mobile, Multi Desktop) --- */
+        /* --- PRODUCT GRID --- */
         .product-grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
@@ -221,6 +242,10 @@
         <div class="logo-container" onclick="location.reload()">N GALLERY</div>
         <div class="nav-controls">
             <div class="social-links">
+                <a href="https://maps.google.com/?q=28+May+Peron+Gallery" target="_blank" class="address-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    28 MAY, PERON GALLERY
+                </a>
                 <a href="tel:0777555450"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
                 <a href="https://www.instagram.com/n_gallery_/" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
             </div>
@@ -266,18 +291,11 @@
     </div>
 
     <script>
-        /**
-         * GITHUB ŞƏKİL TƏLİMATI:
-         * 1. Şəkillərinizi GitHub repozitoriyanıza yükləyin.
-         * 2. Şəklin üzərinə klikləyib "Download" və ya "Raw" düyməsini basın.
-         * 3. Açılan linki (məs: https://raw.githubusercontent.com/istifadeci/repo/main/img.jpg) aşağıdakı massivdə "image" hissəsinə qoyun.
-         */
         const products = [
             { id: 1, category: 'canta', name: "Dəri Əl Çantası", price: 45, color: "Qara", image: "https://raw.githubusercontent.com/istifadeci_adiniz/repo_adiniz/main/canta1.jpg" },
             { id: 2, category: 'canta', name: "Gündəlik Bel Çantası", price: 35, color: "Qəhvəyi", image: "https://raw.githubusercontent.com/istifadeci_adiniz/repo_adiniz/main/canta2.jpg" },
             { id: 3, category: 'camadan', name: "Səyahət Çamadanı", price: 120, color: "Gümüşü", image: "https://raw.githubusercontent.com/istifadeci_adiniz/repo_adiniz/main/camadan1.jpg" },
             { id: 4, category: 'camadan', name: "Kabin Çamadanı", price: 85, color: "Göy", image: "https://raw.githubusercontent.com/istifadeci_adiniz/repo_adiniz/main/camadan2.jpg" }
-            // Digər məhsulları bura əlavə edin...
         ];
 
         let cart = [];
