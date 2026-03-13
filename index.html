@@ -62,10 +62,9 @@
         .nav-controls { display: flex; align-items: center; gap: 12px; }
         .social-links { display: flex; align-items: center; gap: 10px; }
         .social-links a { color: var(--text-primary); opacity: 0.8; transition: opacity 0.2s; }
-        .social-links a:hover { opacity: 1; }
         .social-links svg { width: 18px; height: 18px; }
 
-        /* --- CATEGORIES (Centered & Mobile Responsive) --- */
+        /* --- CATEGORIES (Centered & Mobile Fluid) --- */
         .category-nav-wrapper {
             width: 100%;
             overflow: hidden;
@@ -74,7 +73,7 @@
 
         .category-nav {
             display: flex;
-            justify-content: center; /* Center for desktop */
+            justify-content: center;
             gap: 8px;
             padding: 5px 4%;
             overflow-x: auto;
@@ -82,10 +81,10 @@
             -webkit-overflow-scrolling: touch;
         }
         
-        /* Mobile adjustment for centering or scrolling */
         @media (max-width: 768px) {
             .category-nav {
-                justify-content: flex-start; /* Ensure scrolling starts from left on mobile */
+                justify-content: flex-start;
+                padding-right: 20px;
             }
         }
 
@@ -113,17 +112,17 @@
 
         /* --- MAIN --- */
         main { max-width: 1400px; margin: 0 auto 80px auto; padding: 0 3%; }
-        .section-title { font-size: 1.2rem; font-weight: 800; text-align: left; margin: 10px 0 20px 2%; letter-spacing: -0.5px; }
+        .section-title { font-size: 1.1rem; font-weight: 800; text-align: left; margin: 10px 0 20px 2%; letter-spacing: -0.5px; opacity: 0.8; }
 
         @media (min-width: 768px) {
-            .section-title { text-align: center; font-size: 2rem; }
+            .section-title { text-align: center; font-size: 1.8rem; }
         }
 
-        /* --- PRODUCT GRID --- */
+        /* --- PRODUCT GRID (2 Columns Mobile, Multi Desktop) --- */
         .product-grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
-            gap: 12px; 
+            gap: 10px; 
         }
 
         .reveal {
@@ -152,28 +151,25 @@
             aspect-ratio: 1 / 1;
             overflow: hidden;
             border-radius: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             background: #f0f0f0;
             cursor: pointer;
         }
         .product-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
-        .product-card:hover .product-image { transform: scale(1.05); }
         
         .product-content { flex-grow: 1; display: flex; flex-direction: column; padding: 2px; }
         .product-color { font-size: 9px; color: var(--text-secondary); text-transform: uppercase; font-weight: 700; }
-        .product-name { font-weight: 700; font-size: 0.85rem; margin: 4px 0; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
-        .product-price { font-weight: 800; font-size: 0.95rem; margin-bottom: 10px; color: var(--text-primary); }
+        .product-name { font-weight: 700; font-size: 0.8rem; margin: 4px 0; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+        .product-price { font-weight: 800; font-size: 0.9rem; margin-bottom: 8px; color: var(--text-primary); }
 
         .btn-add {
             width: 100%; padding: 10px; 
             background: var(--text-primary); color: var(--bg-color);
-            border: none; border-radius: 8px; font-weight: 700; font-size: 0.75rem;
+            border: none; border-radius: 8px; font-weight: 700; font-size: 0.7rem;
             cursor: pointer; margin-top: auto;
-            transition: opacity 0.2s;
         }
-        .btn-add:active { opacity: 0.7; }
 
-        /* --- CART SIDEBAR --- */
+        /* --- CART --- */
         #cart-sidebar {
             position: fixed; right: -100%; top: 0; width: 100%; max-width: 400px; height: 100%;
             background: var(--surface-color); z-index: 2000; transition: var(--transition);
@@ -186,30 +182,25 @@
             position: fixed; bottom: 20px; right: 20px; width: 56px; height: 56px;
             background: var(--text-primary); color: var(--bg-color); border-radius: 50%;
             display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 999;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
         .badge { 
             position: absolute; top: 0; right: 0; background: #ff3b30; color: #fff; 
             min-width: 20px; height: 20px; display: none; align-items: center;
             justify-content: center; border-radius: 10px; font-size: 10px; font-weight: 900;
-            border: 2px solid var(--bg-color);
         }
         .badge.pop { display: flex; }
 
-        /* --- LIGHTBOX --- */
         #lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); z-index: 3000; display: none;
-            justify-content: center; align-items: center; cursor: pointer;
+            justify-content: center; align-items: center;
         }
-        #lightbox img { max-width: 95%; max-height: 80%; border-radius: 8px; }
+        #lightbox img { max-width: 90%; max-height: 80%; border-radius: 8px; }
         #lightbox.active { display: flex; }
 
         @media (min-width: 768px) {
             .product-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
-            .cat-btn { font-size: 0.9rem; padding: 10px 20px; }
         }
-
         @media (min-width: 1024px) {
             .product-grid { grid-template-columns: repeat(4, 1fr); }
         }
@@ -230,11 +221,10 @@
         <div class="logo-container" onclick="location.reload()">N GALLERY</div>
         <div class="nav-controls">
             <div class="social-links">
-                <a href="tel:0777555450" title="Zəng et"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
-                <a href="https://www.instagram.com/n_gallery_/" target="_blank" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                <a href="https://www.tiktok.com/@n_gallery_" target="_blank" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><circle cx="9" cy="16" r="4"></circle></svg></a>
+                <a href="tel:0777555450"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
+                <a href="https://www.instagram.com/n_gallery_/" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
             </div>
-            <button id="theme-toggle" style="background:none; border:none; color:inherit; cursor:pointer;" title="Mövzunu dəyiş">
+            <button id="theme-toggle" style="background:none; border:none; color:inherit; cursor:pointer;">
                 <svg id="theme-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
         </div>
@@ -262,7 +252,7 @@
 
     <div id="cart-sidebar">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h3 style="font-weight: 800; font-size: 1rem; letter-spacing: 1px;">SƏBƏT</h3>
+            <h3 style="font-weight: 800; font-size: 1rem;">SƏBƏT</h3>
             <button onclick="toggleCart()" style="background:none; border:none; font-size:28px; cursor:pointer; color:var(--text-primary)">&times;</button>
         </div>
         <div id="cart-items" style="flex:1; overflow-y:auto;"></div>
@@ -271,44 +261,39 @@
                 <span>CƏMİ</span>
                 <span id="cart-total-price">0.00 AZN</span>
             </div>
-            <button onclick="checkout()" style="width:100%; padding:14px; background:#25d366; color:white; border:none; border-radius:10px; font-weight:800; cursor:pointer; font-size: 0.9rem;">WHATSAPP İLƏ SİFARİŞ</button>
+            <button onclick="checkout()" style="width:100%; padding:14px; background:#25d366; color:white; border:none; border-radius:10px; font-weight:800; cursor:pointer;">WHATSAPP SİFARİŞ</button>
         </div>
     </div>
 
     <script>
+        /**
+         * GITHUB ŞƏKİL TƏLİMATI:
+         * 1. Şəkillərinizi GitHub repozitoriyanıza yükləyin.
+         * 2. Şəklin üzərinə klikləyib "Download" və ya "Raw" düyməsini basın.
+         * 3. Açılan linki (məs: https://raw.githubusercontent.com/istifadeci/repo/main/img.jpg) aşağıdakı massivdə "image" hissəsinə qoyun.
+         */
         const products = [
-            { id: 1, category: 'canta', name: "Dəri Əl Çantası", price: 45, color: "Qara", image: "https://images.unsplash.com/photo-1584917033904-493bb3ce3ea1?q=80&w=800&auto=format&fit=crop" },
-            { id: 2, category: 'canta', name: "Gündəlik Bel Çantası", price: 35, color: "Qəhvəyi", image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=800&auto=format&fit=crop" },
-            { id: 3, category: 'camadan', name: "Səyahət Çamadanı", price: 120, color: "Gümüşü", image: "https://images.unsplash.com/photo-1565026057447-bc90a3dceb87?q=80&w=800&auto=format&fit=crop" },
-            { id: 4, category: 'camadan', name: "Kabin Çamadanı", price: 85, color: "Göy", image: "https://images.unsplash.com/photo-1581553680321-4fffae59fccd?q=80&w=800&auto=format&fit=crop" },
-            { id: 5, category: 'idman', name: "Professional İdman", price: 55, color: "Mat Qara", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=800&auto=format&fit=crop" },
-            { id: 6, category: 'idman', name: "Yüngül Məşq Çantası", price: 25, color: "Boz", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format&fit=crop" },
-            { id: 7, category: 'hediyye', name: "Premium Hədiyyə", price: 65, color: "Qızılı", image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop" },
-            { id: 8, category: 'hediyye', name: "Minimalist Qutu", price: 15, color: "Ağ", image: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=800&auto=format&fit=crop" }
+            { id: 1, category: 'canta', name: "Dəri Əl Çantası", price: 45, color: "Qara", image: "https://raw.githubusercontent.com/istifadeci_adiniz/repo_adiniz/main/canta1.jpg" },
+            { id: 2, category: 'canta', name: "Gündəlik Bel Çantası", price: 35, color: "Qəhvəyi", image: "https://raw.githubusercontent.com/istifadeci_adiniz/repo_adiniz/main/canta2.jpg" },
+            { id: 3, category: 'camadan', name: "Səyahət Çamadanı", price: 120, color: "Gümüşü", image: "https://raw.githubusercontent.com/istifadeci_adiniz/repo_adiniz/main/camadan1.jpg" },
+            { id: 4, category: 'camadan', name: "Kabin Çamadanı", price: 85, color: "Göy", image: "https://raw.githubusercontent.com/istifadeci_adiniz/repo_adiniz/main/camadan2.jpg" }
+            // Digər məhsulları bura əlavə edin...
         ];
 
         let cart = [];
         let currentFilter = 'all';
 
-        // Theme Logic
         document.getElementById('theme-toggle').onclick = () => {
             const body = document.body;
             const isDark = body.getAttribute('data-theme') === 'dark';
             body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-            document.getElementById('theme-icon').innerHTML = isDark 
-                ? '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'
-                : '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
         };
 
         function filterCategory(cat) {
             currentFilter = cat;
-            document.querySelectorAll('.cat-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if(btn.getAttribute('onclick').includes(cat)) btn.classList.add('active');
-            });
-
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.toggle('active', btn.getAttribute('onclick').includes(cat)));
             const titles = { all: "BÜTÜN MƏHSULLAR", canta: "ÇANTALAR", camadan: "ÇAMADANLAR", idman: "İDMAN ÇANTALARI", hediyye: "HƏDİYYƏ QUTULARI" };
-            document.getElementById('current-category-title').innerText = titles[cat];
+            document.getElementById('current-category-title').innerText = titles[cat] || "MƏHSULLAR";
             renderProducts();
         }
 
@@ -319,7 +304,7 @@
             list.innerHTML = filtered.map(p => `
                 <div class="product-card reveal">
                     <div class="product-image-wrapper" onclick="openLightbox('${p.image}')">
-                        <img src="${p.image}" class="product-image" loading="lazy">
+                        <img src="${p.image}" class="product-image" loading="lazy" onerror="this.src='https://via.placeholder.com/400?text=Sekil+Yoxdur'">
                     </div>
                     <div class="product-content">
                         <div class="product-color">${p.color}</div>
@@ -330,16 +315,13 @@
                 </div>
             `).join('');
 
-            setTimeout(() => {
-                document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
-            }, 50);
+            setTimeout(() => document.querySelectorAll('.reveal').forEach(el => el.classList.add('active')), 50);
         }
 
         function addToCart(id) {
             const product = products.find(p => p.id === id);
             const inCart = cart.find(item => item.id === id);
-            if(inCart) inCart.qty++;
-            else cart.push({...product, qty: 1});
+            if(inCart) inCart.qty++; else cart.push({...product, qty: 1});
             updateCartUI();
             toggleCart(true);
         }
@@ -350,7 +332,7 @@
             let total = 0, count = 0;
 
             if (cart.length === 0) {
-                container.innerHTML = `<div style="text-align:center; opacity:0.5; margin-top:40px; font-size:0.9rem;">Səbətiniz boşdur</div>`;
+                container.innerHTML = `<div style="text-align:center; opacity:0.5; margin-top:40px;">Səbət boşdur</div>`;
                 badge.style.display = 'none';
             } else {
                 badge.style.display = 'flex';
@@ -359,15 +341,15 @@
                     count += item.qty;
                     return `
                         <div style="display:flex; gap:12px; margin-bottom:12px; align-items:center;">
-                            <img src="${item.image}" style="width:45px; height:45px; border-radius:6px; object-fit:cover;">
+                            <img src="${item.image}" style="width:40px; height:40px; border-radius:6px; object-fit:cover;">
                             <div style="flex:1;">
-                                <div style="font-weight:700; font-size:12px;">${item.name}</div>
-                                <div style="font-size:11px; opacity:0.7;">${item.price.toFixed(2)} AZN</div>
+                                <div style="font-weight:700; font-size:11px;">${item.name}</div>
+                                <div style="font-size:10px; opacity:0.7;">${item.price.toFixed(2)} AZN</div>
                             </div>
-                            <div style="display:flex; align-items:center; gap:8px;">
-                                <button onclick="updateQty(${item.id}, -1)" style="width:20px; height:20px; border-radius:50%; border:1px solid var(--border-color); background:none; color:var(--text-primary); cursor:pointer;">-</button>
-                                <span style="font-size:12px; font-weight:700;">${item.qty}</span>
-                                <button onclick="updateQty(${item.id}, 1)" style="width:20px; height:20px; border-radius:50%; border:1px solid var(--border-color); background:none; color:var(--text-primary); cursor:pointer;">+</button>
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <button onclick="updateQty(${item.id}, -1)" style="width:18px; height:18px; border-radius:50%; border:1px solid var(--border-color);">-</button>
+                                <span style="font-size:11px;">${item.qty}</span>
+                                <button onclick="updateQty(${item.id}, 1)" style="width:18px; height:18px; border-radius:50%; border:1px solid var(--border-color);">+</button>
                             </div>
                         </div>
                     `;
@@ -388,14 +370,12 @@
 
         function toggleCart(forceOpen = false) {
             const side = document.getElementById('cart-sidebar');
-            if(forceOpen) side.classList.add('open');
-            else side.classList.toggle('open');
+            if(forceOpen) side.classList.add('open'); else side.classList.toggle('open');
         }
 
         function openLightbox(src) {
-            const lb = document.getElementById('lightbox');
             document.getElementById('lightbox-img').src = src;
-            lb.classList.add('active');
+            document.getElementById('lightbox').classList.add('active');
         }
 
         function closeLightbox() {
@@ -404,8 +384,8 @@
 
         function checkout() {
             if(cart.length === 0) return;
-            let msg = `*YENİ SİFARİŞ (N GALLERY)*\n━━━━━━━━━━━━━━\n\n`;
-            cart.forEach((i, idx) => { msg += `${idx + 1}. *${i.name}* (${i.color})\n   ${i.qty} ədəd x ${i.price} AZN\n`; });
+            let msg = `*YENİ SİFARİŞ (N GALLERY)*\n\n`;
+            cart.forEach((i, idx) => { msg += `${idx + 1}. *${i.name}* - ${i.qty} ədəd\n`; });
             msg += `\n*CƏMİ:* ${document.getElementById('cart-total-price').innerText}`;
             window.open(`https://wa.me/994773313327?text=${encodeURIComponent(msg)}`);
         }
@@ -414,13 +394,13 @@
             const bar = document.getElementById('load-bar');
             let p = 0;
             const int = setInterval(() => {
-                p += 10;
+                p += 20;
                 bar.style.width = p + "%";
                 if(p >= 100) {
                     clearInterval(int);
                     setTimeout(() => { document.getElementById('loader').classList.add('hidden'); renderProducts(); }, 150);
                 }
-            }, 30);
+            }, 50);
         });
     </script>
 </body>
