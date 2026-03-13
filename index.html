@@ -61,19 +61,34 @@
 
         .nav-controls { display: flex; align-items: center; gap: 12px; }
         .social-links { display: flex; align-items: center; gap: 10px; }
-        .social-links a { color: var(--text-primary); opacity: 0.8; }
+        .social-links a { color: var(--text-primary); opacity: 0.8; transition: opacity 0.2s; }
+        .social-links a:hover { opacity: 1; }
         .social-links svg { width: 18px; height: 18px; }
 
-        /* --- CATEGORIES (Optimized for Mobile) --- */
+        /* --- CATEGORIES (Centered & Mobile Responsive) --- */
+        .category-nav-wrapper {
+            width: 100%;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
         .category-nav {
             display: flex;
+            justify-content: center; /* Center for desktop */
             gap: 8px;
-            margin: 15px 0;
-            overflow-x: auto;
             padding: 5px 4%;
+            overflow-x: auto;
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
         }
+        
+        /* Mobile adjustment for centering or scrolling */
+        @media (max-width: 768px) {
+            .category-nav {
+                justify-content: flex-start; /* Ensure scrolling starts from left on mobile */
+            }
+        }
+
         .category-nav::-webkit-scrollbar { display: none; }
         
         .cat-btn {
@@ -87,7 +102,9 @@
             font-size: 0.75rem;
             transition: var(--transition);
             flex-shrink: 0;
+            cursor: pointer;
         }
+        
         .cat-btn.active {
             background: var(--text-primary);
             color: var(--bg-color);
@@ -98,7 +115,11 @@
         main { max-width: 1400px; margin: 0 auto 80px auto; padding: 0 3%; }
         .section-title { font-size: 1.2rem; font-weight: 800; text-align: left; margin: 10px 0 20px 2%; letter-spacing: -0.5px; }
 
-        /* --- PRODUCT GRID (2 Columns on Mobile) --- */
+        @media (min-width: 768px) {
+            .section-title { text-align: center; font-size: 2rem; }
+        }
+
+        /* --- PRODUCT GRID --- */
         .product-grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
@@ -133,8 +154,10 @@
             border-radius: 8px;
             margin-bottom: 10px;
             background: #f0f0f0;
+            cursor: pointer;
         }
-        .product-image { width: 100%; height: 100%; object-fit: cover; }
+        .product-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+        .product-card:hover .product-image { transform: scale(1.05); }
         
         .product-content { flex-grow: 1; display: flex; flex-direction: column; padding: 2px; }
         .product-color { font-size: 9px; color: var(--text-secondary); text-transform: uppercase; font-weight: 700; }
@@ -146,13 +169,16 @@
             background: var(--text-primary); color: var(--bg-color);
             border: none; border-radius: 8px; font-weight: 700; font-size: 0.75rem;
             cursor: pointer; margin-top: auto;
+            transition: opacity 0.2s;
         }
+        .btn-add:active { opacity: 0.7; }
 
         /* --- CART SIDEBAR --- */
         #cart-sidebar {
             position: fixed; right: -100%; top: 0; width: 100%; max-width: 400px; height: 100%;
             background: var(--surface-color); z-index: 2000; transition: var(--transition);
             padding: 20px; display: flex; flex-direction: column;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
         }
         #cart-sidebar.open { right: 0; }
 
@@ -166,7 +192,7 @@
             position: absolute; top: 0; right: 0; background: #ff3b30; color: #fff; 
             min-width: 20px; height: 20px; display: none; align-items: center;
             justify-content: center; border-radius: 10px; font-size: 10px; font-weight: 900;
-            border: 2px solid var(--text-primary);
+            border: 2px solid var(--bg-color);
         }
         .badge.pop { display: flex; }
 
@@ -174,15 +200,14 @@
         #lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); z-index: 3000; display: none;
-            justify-content: center; align-items: center;
+            justify-content: center; align-items: center; cursor: pointer;
         }
         #lightbox img { max-width: 95%; max-height: 80%; border-radius: 8px; }
         #lightbox.active { display: flex; }
 
         @media (min-width: 768px) {
-            .product-grid { grid-template-columns: repeat(3, 1fr); }
+            .product-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
             .cat-btn { font-size: 0.9rem; padding: 10px 20px; }
-            .section-title { font-size: 2rem; margin-left: 0; text-align: center; }
         }
 
         @media (min-width: 1024px) {
@@ -205,22 +230,24 @@
         <div class="logo-container" onclick="location.reload()">N GALLERY</div>
         <div class="nav-controls">
             <div class="social-links">
-                <a href="tel:0777555450"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
-                <a href="https://www.instagram.com/n_gallery_/" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                <a href="https://www.tiktok.com/@n_gallery_" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><circle cx="9" cy="16" r="4"></circle></svg></a>
+                <a href="tel:0777555450" title="Zəng et"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
+                <a href="https://www.instagram.com/n_gallery_/" target="_blank" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                <a href="https://www.tiktok.com/@n_gallery_" target="_blank" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><circle cx="9" cy="16" r="4"></circle></svg></a>
             </div>
-            <button id="theme-toggle" style="background:none; border:none; color:inherit; cursor:pointer;">
+            <button id="theme-toggle" style="background:none; border:none; color:inherit; cursor:pointer;" title="Mövzunu dəyiş">
                 <svg id="theme-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
         </div>
     </header>
 
-    <div class="category-nav" id="category-list">
-        <button class="cat-btn active" onclick="filterCategory('all')">Hamısı</button>
-        <button class="cat-btn" onclick="filterCategory('canta')">Çantalar</button>
-        <button class="cat-btn" onclick="filterCategory('camadan')">Çamadanlar</button>
-        <button class="cat-btn" onclick="filterCategory('idman')">İdman</button>
-        <button class="cat-btn" onclick="filterCategory('hediyye')">Hədiyyə</button>
+    <div class="category-nav-wrapper">
+        <div class="category-nav" id="category-list">
+            <button class="cat-btn active" onclick="filterCategory('all')">Hamısı</button>
+            <button class="cat-btn" onclick="filterCategory('canta')">Çantalar</button>
+            <button class="cat-btn" onclick="filterCategory('camadan')">Çamadanlar</button>
+            <button class="cat-btn" onclick="filterCategory('idman')">İdman</button>
+            <button class="cat-btn" onclick="filterCategory('hediyye')">Hədiyyə</button>
+        </div>
     </div>
 
     <main>
@@ -235,7 +262,7 @@
 
     <div id="cart-sidebar">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h3 style="font-weight: 800; font-size: 1rem;">SƏBƏT</h3>
+            <h3 style="font-weight: 800; font-size: 1rem; letter-spacing: 1px;">SƏBƏT</h3>
             <button onclick="toggleCart()" style="background:none; border:none; font-size:28px; cursor:pointer; color:var(--text-primary)">&times;</button>
         </div>
         <div id="cart-items" style="flex:1; overflow-y:auto;"></div>
@@ -263,6 +290,7 @@
         let cart = [];
         let currentFilter = 'all';
 
+        // Theme Logic
         document.getElementById('theme-toggle').onclick = () => {
             const body = document.body;
             const isDark = body.getAttribute('data-theme') === 'dark';
@@ -337,9 +365,9 @@
                                 <div style="font-size:11px; opacity:0.7;">${item.price.toFixed(2)} AZN</div>
                             </div>
                             <div style="display:flex; align-items:center; gap:8px;">
-                                <button onclick="updateQty(${item.id}, -1)" style="width:20px; height:20px; border-radius:50%; border:1px solid var(--border-color); background:none; color:var(--text-primary);">-</button>
+                                <button onclick="updateQty(${item.id}, -1)" style="width:20px; height:20px; border-radius:50%; border:1px solid var(--border-color); background:none; color:var(--text-primary); cursor:pointer;">-</button>
                                 <span style="font-size:12px; font-weight:700;">${item.qty}</span>
-                                <button onclick="updateQty(${item.id}, 1)" style="width:20px; height:20px; border-radius:50%; border:1px solid var(--border-color); background:none; color:var(--text-primary);">+</button>
+                                <button onclick="updateQty(${item.id}, 1)" style="width:20px; height:20px; border-radius:50%; border:1px solid var(--border-color); background:none; color:var(--text-primary); cursor:pointer;">+</button>
                             </div>
                         </div>
                     `;
