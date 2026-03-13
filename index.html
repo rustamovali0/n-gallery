@@ -2,7 +2,7 @@
 <html lang="az">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>N GALLERY - Rəsmi Mağaza</title>
     <style>
         :root {
@@ -14,7 +14,7 @@
             --accent-color: #000000;
             --border-color: #d2d2d7;
             --header-bg: rgba(245, 245, 247, 0.8);
-            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         [data-theme="dark"] {
@@ -28,73 +28,65 @@
             --header-bg: rgba(10, 10, 10, 0.8);
         }
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-color); }
-        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-primary);
             transition: background-color 0.4s ease, color 0.4s ease;
             overflow-x: hidden;
+            line-height: 1.4;
         }
 
         /* --- LOADER --- */
         #loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #fff; display: flex; flex-direction: column;
+            background: var(--bg-color); display: flex; flex-direction: column;
             justify-content: center; align-items: center; z-index: 9999;
-            transition: transform 0.8s cubic-bezier(1, 0, 0, 1);
+            transition: transform 0.6s cubic-bezier(1, 0, 0, 1);
         }
-        .loader-logo {
-            font-size: 2rem; font-weight: 900; letter-spacing: 8px; color: #000;
-            text-align: center;
-        }
-        .progress-container { width: 150px; height: 2px; background: rgba(0,0,0,0.1); margin-top: 20px; position: relative; }
-        .progress-bar { position: absolute; height: 100%; background: #000; width: 0%; transition: width 0.3s; }
-        #loader.hidden { transform: translateY(-100%); pointer-events: none; }
+        .loader-logo { font-size: 1.5rem; font-weight: 900; letter-spacing: 4px; color: var(--text-primary); }
+        .progress-container { width: 120px; height: 2px; background: rgba(0,0,0,0.1); margin-top: 20px; position: relative; }
+        .progress-bar { position: absolute; height: 100%; background: var(--text-primary); width: 0%; transition: width 0.2s; }
+        #loader.hidden { transform: translateY(-100%); }
 
         /* --- HEADER --- */
         header {
-            padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 4%; display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid var(--border-color); position: sticky; top: 0;
             background: var(--header-bg); backdrop-filter: blur(20px); z-index: 1000;
         }
         
-        .logo-container { font-weight:900; letter-spacing:1px; font-size: 1.3rem; cursor: pointer; }
+        .logo-container { font-weight: 900; letter-spacing: 0.5px; font-size: 1.1rem; cursor: pointer; }
 
-        .nav-controls { display: flex; align-items: center; gap: 15px; }
+        .nav-controls { display: flex; align-items: center; gap: 12px; }
+        .social-links { display: flex; align-items: center; gap: 10px; }
+        .social-links a { color: var(--text-primary); opacity: 0.8; }
+        .social-links svg { width: 18px; height: 18px; }
 
-        .social-links { display: flex; align-items: center; gap: 12px; }
-        .social-links a { color: var(--text-primary); text-decoration: none; display: flex; align-items: center; opacity: 0.7; transition: opacity 0.3s; }
-        .social-links a:hover { opacity: 1; }
-        .social-links svg { width: 20px; height: 20px; }
-
-        /* --- CATEGORIES --- */
+        /* --- CATEGORIES (Optimized for Mobile) --- */
         .category-nav {
             display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 30px 0;
+            gap: 8px;
+            margin: 15px 0;
             overflow-x: auto;
-            padding: 10px 5%;
+            padding: 5px 4%;
             scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
         }
         .category-nav::-webkit-scrollbar { display: none; }
         
         .cat-btn {
-            padding: 10px 20px;
-            border-radius: 30px;
+            padding: 8px 14px;
+            border-radius: 20px;
             background: var(--surface-color);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
-            cursor: pointer;
             white-space: nowrap;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             transition: var(--transition);
+            flex-shrink: 0;
         }
         .cat-btn.active {
             background: var(--text-primary);
@@ -103,19 +95,20 @@
         }
 
         /* --- MAIN --- */
-        main { max-width: 1400px; margin: 0 auto 60px auto; padding: 0 5%; }
-        .section-title { font-size: 2rem; font-weight: 900; text-align: center; margin-bottom: 30px; letter-spacing: -1px; }
+        main { max-width: 1400px; margin: 0 auto 80px auto; padding: 0 3%; }
+        .section-title { font-size: 1.2rem; font-weight: 800; text-align: left; margin: 10px 0 20px 2%; letter-spacing: -0.5px; }
 
+        /* --- PRODUCT GRID (2 Columns on Mobile) --- */
         .product-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
-            gap: 25px; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 12px; 
         }
 
         .reveal {
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transform: translateY(15px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
         .reveal.active {
             opacity: 1;
@@ -124,78 +117,76 @@
 
         .product-card {
             background: var(--surface-color); 
-            border-radius: 16px; 
-            padding: 15px;
+            border-radius: 12px; 
+            padding: 8px;
             transition: var(--transition); 
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            height: 100%;
+            position: relative;
         }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
 
         .product-image-wrapper {
             width: 100%;
-            aspect-ratio: 1 / 1.1;
+            aspect-ratio: 1 / 1;
             overflow: hidden;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            background: #eee;
-            cursor: zoom-in;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: #f0f0f0;
         }
-        .product-image { 
-            width: 100%; height: 100%; object-fit: cover; display: block;
-            transition: transform 0.5s ease;
-        }
-        .product-card:hover .product-image { transform: scale(1.05); }
+        .product-image { width: 100%; height: 100%; object-fit: cover; }
         
-        .product-content { flex-grow: 1; display: flex; flex-direction: column; }
+        .product-content { flex-grow: 1; display: flex; flex-direction: column; padding: 2px; }
+        .product-color { font-size: 9px; color: var(--text-secondary); text-transform: uppercase; font-weight: 700; }
+        .product-name { font-weight: 700; font-size: 0.85rem; margin: 4px 0; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+        .product-price { font-weight: 800; font-size: 0.95rem; margin-bottom: 10px; color: var(--text-primary); }
 
         .btn-add {
-            width: 100%; padding: 12px; 
+            width: 100%; padding: 10px; 
             background: var(--text-primary); color: var(--bg-color);
-            border: none; border-radius: 10px; font-weight: 700; 
-            cursor: pointer; margin-top: auto; transition: opacity 0.2s;
+            border: none; border-radius: 8px; font-weight: 700; font-size: 0.75rem;
+            cursor: pointer; margin-top: auto;
         }
-        .btn-add:active { opacity: 0.7; }
 
         /* --- CART SIDEBAR --- */
         #cart-sidebar {
-            position: fixed; right: -100%; top: 0; width: 380px; height: 100%;
+            position: fixed; right: -100%; top: 0; width: 100%; max-width: 400px; height: 100%;
             background: var(--surface-color); z-index: 2000; transition: var(--transition);
-            padding: 25px; display: flex; flex-direction: column;
-            box-shadow: -10px 0 40px rgba(0,0,0,0.1);
+            padding: 20px; display: flex; flex-direction: column;
         }
         #cart-sidebar.open { right: 0; }
 
         .floating-cart {
-            position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px;
+            position: fixed; bottom: 20px; right: 20px; width: 56px; height: 56px;
             background: var(--text-primary); color: var(--bg-color); border-radius: 50%;
             display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 999;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
         .badge { 
-            position: absolute; top: -5px; right: -5px; background: #ff3b30; color: #fff; 
-            min-width: 22px; height: 22px; display: none; align-items: center;
-            justify-content: center; border-radius: 11px; font-size: 11px; font-weight: 900;
-            border: 2px solid var(--bg-color);
+            position: absolute; top: 0; right: 0; background: #ff3b30; color: #fff; 
+            min-width: 20px; height: 20px; display: none; align-items: center;
+            justify-content: center; border-radius: 10px; font-size: 10px; font-weight: 900;
+            border: 2px solid var(--text-primary);
         }
         .badge.pop { display: flex; }
 
         /* --- LIGHTBOX --- */
         #lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 3000; display: none;
-            justify-content: center; align-items: center; cursor: zoom-out;
-            backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.95); z-index: 3000; display: none;
+            justify-content: center; align-items: center;
         }
-        #lightbox img { max-width: 90%; max-height: 85%; border-radius: 10px; }
+        #lightbox img { max-width: 95%; max-height: 80%; border-radius: 8px; }
         #lightbox.active { display: flex; }
 
-        @media (max-width: 500px) {
-            #cart-sidebar { width: 100%; }
-            .product-grid { grid-template-columns: 1fr; }
-            .section-title { font-size: 1.5rem; }
+        @media (min-width: 768px) {
+            .product-grid { grid-template-columns: repeat(3, 1fr); }
+            .cat-btn { font-size: 0.9rem; padding: 10px 20px; }
+            .section-title { font-size: 2rem; margin-left: 0; text-align: center; }
+        }
+
+        @media (min-width: 1024px) {
+            .product-grid { grid-template-columns: repeat(4, 1fr); }
         }
     </style>
 </head>
@@ -214,24 +205,12 @@
         <div class="logo-container" onclick="location.reload()">N GALLERY</div>
         <div class="nav-controls">
             <div class="social-links">
-                <!-- Phone -->
-                <a href="tel:0777555450" title="Zəng et">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                </a>
-                <!-- Instagram -->
-                <a href="https://www.instagram.com/n_gallery_/" target="_blank" title="Instagram">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                </a>
-                <!-- TikTok -->
-                <a href="https://www.tiktok.com/@n_gallery_" target="_blank" title="TikTok">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>
-                        <circle cx="9" cy="16" r="4"></circle>
-                    </svg>
-                </a>
+                <a href="tel:0777555450"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
+                <a href="https://www.instagram.com/n_gallery_/" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                <a href="https://www.tiktok.com/@n_gallery_" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><circle cx="9" cy="16" r="4"></circle></svg></a>
             </div>
             <button id="theme-toggle" style="background:none; border:none; color:inherit; cursor:pointer;">
-                <svg id="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                <svg id="theme-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
         </div>
     </header>
@@ -240,8 +219,8 @@
         <button class="cat-btn active" onclick="filterCategory('all')">Hamısı</button>
         <button class="cat-btn" onclick="filterCategory('canta')">Çantalar</button>
         <button class="cat-btn" onclick="filterCategory('camadan')">Çamadanlar</button>
-        <button class="cat-btn" onclick="filterCategory('idman')">İdman çantaları</button>
-        <button class="cat-btn" onclick="filterCategory('hediyye')">Hədiyyə qutuları</button>
+        <button class="cat-btn" onclick="filterCategory('idman')">İdman</button>
+        <button class="cat-btn" onclick="filterCategory('hediyye')">Hədiyyə</button>
     </div>
 
     <main>
@@ -250,48 +229,40 @@
     </main>
 
     <div class="floating-cart" onclick="toggleCart()">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4H6zM3 6h18M16 10a4 4 0 01-8 0"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4H6zM3 6h18M16 10a4 4 0 01-8 0"/></svg>
         <span class="badge" id="cart-count">0</span>
     </div>
 
     <div id="cart-sidebar">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
-            <h3 style="letter-spacing: 1px;">SƏBƏT</h3>
-            <button onclick="toggleCart()" style="background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-primary)">&times;</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h3 style="font-weight: 800; font-size: 1rem;">SƏBƏT</h3>
+            <button onclick="toggleCart()" style="background:none; border:none; font-size:28px; cursor:pointer; color:var(--text-primary)">&times;</button>
         </div>
         <div id="cart-items" style="flex:1; overflow-y:auto;"></div>
-        <div style="border-top:1px solid var(--border-color); padding-top:20px; margin-top:10px;">
-            <div style="display:flex; justify-content:space-between; font-weight:800; margin-bottom:20px; font-size:1.1rem;">
+        <div style="border-top:1px solid var(--border-color); padding-top:20px;">
+            <div style="display:flex; justify-content:space-between; font-weight:800; margin-bottom:15px;">
                 <span>CƏMİ</span>
                 <span id="cart-total-price">0.00 AZN</span>
             </div>
-            <button onclick="checkout()" style="width:100%; padding:16px; background:#25d366; color:white; border:none; border-radius:12px; font-weight:800; cursor:pointer;">WHATSAPP İLƏ SİFARİŞ ET</button>
+            <button onclick="checkout()" style="width:100%; padding:14px; background:#25d366; color:white; border:none; border-radius:10px; font-weight:800; cursor:pointer; font-size: 0.9rem;">WHATSAPP İLƏ SİFARİŞ</button>
         </div>
     </div>
 
     <script>
         const products = [
-            // Çantalar
             { id: 1, category: 'canta', name: "Dəri Əl Çantası", price: 45, color: "Qara", image: "https://images.unsplash.com/photo-1584917033904-493bb3ce3ea1?q=80&w=800&auto=format&fit=crop" },
             { id: 2, category: 'canta', name: "Gündəlik Bel Çantası", price: 35, color: "Qəhvəyi", image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=800&auto=format&fit=crop" },
-            
-            // Çamadanlar
-            { id: 3, category: 'camadan', name: "Səyahət Çamadanı (Böyük)", price: 120, color: "Gümüşü", image: "https://images.unsplash.com/photo-1565026057447-bc90a3dceb87?q=80&w=800&auto=format&fit=crop" },
-            { id: 4, category: 'camadan', name: "Kabin Ölçülü Çamadan", price: 85, color: "Göy", image: "https://images.unsplash.com/photo-1581553680321-4fffae59fccd?q=80&w=800&auto=format&fit=crop" },
-            
-            // İdman Çantaları
-            { id: 5, category: 'idman', name: "Professional İdman Çantası", price: 55, color: "Mat Qara", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=800&auto=format&fit=crop" },
+            { id: 3, category: 'camadan', name: "Səyahət Çamadanı", price: 120, color: "Gümüşü", image: "https://images.unsplash.com/photo-1565026057447-bc90a3dceb87?q=80&w=800&auto=format&fit=crop" },
+            { id: 4, category: 'camadan', name: "Kabin Çamadanı", price: 85, color: "Göy", image: "https://images.unsplash.com/photo-1581553680321-4fffae59fccd?q=80&w=800&auto=format&fit=crop" },
+            { id: 5, category: 'idman', name: "Professional İdman", price: 55, color: "Mat Qara", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=800&auto=format&fit=crop" },
             { id: 6, category: 'idman', name: "Yüngül Məşq Çantası", price: 25, color: "Boz", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format&fit=crop" },
-
-            // Hədiyyə Qutuları
-            { id: 7, category: 'hediyye', name: "Premium Hədiyyə Dəsti", price: 65, color: "Qızılı", image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop" },
+            { id: 7, category: 'hediyye', name: "Premium Hədiyyə", price: 65, color: "Qızılı", image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format&fit=crop" },
             { id: 8, category: 'hediyye', name: "Minimalist Qutu", price: 15, color: "Ağ", image: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=800&auto=format&fit=crop" }
         ];
 
         let cart = [];
         let currentFilter = 'all';
 
-        // Theme Toggle
         document.getElementById('theme-toggle').onclick = () => {
             const body = document.body;
             const isDark = body.getAttribute('data-theme') === 'dark';
@@ -303,25 +274,13 @@
 
         function filterCategory(cat) {
             currentFilter = cat;
-            
-            // Update buttons UI
             document.querySelectorAll('.cat-btn').forEach(btn => {
                 btn.classList.remove('active');
-                if(btn.getAttribute('onclick').includes(cat)) {
-                    btn.classList.add('active');
-                }
+                if(btn.getAttribute('onclick').includes(cat)) btn.classList.add('active');
             });
 
-            // Update Title
-            const titles = {
-                all: "BÜTÜN MƏHSULLAR",
-                canta: "ÇANTALAR",
-                camadan: "ÇAMADANLAR",
-                idman: "İDMAN ÇANTALARI",
-                hediyye: "HƏDİYYƏ QUTULARI"
-            };
+            const titles = { all: "BÜTÜN MƏHSULLAR", canta: "ÇANTALAR", camadan: "ÇAMADANLAR", idman: "İDMAN ÇANTALARI", hediyye: "HƏDİYYƏ QUTULARI" };
             document.getElementById('current-category-title').innerText = titles[cat];
-
             renderProducts();
         }
 
@@ -335,27 +294,24 @@
                         <img src="${p.image}" class="product-image" loading="lazy">
                     </div>
                     <div class="product-content">
-                        <div style="font-size:10px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:1px; font-weight:700;">${p.color}</div>
-                        <div style="font-weight:700; font-size:1.1rem; margin: 5px 0;">${p.name}</div>
-                        <div style="font-weight:900; font-size:1.2rem; margin-bottom:15px;">${p.price.toFixed(2)} AZN</div>
+                        <div class="product-color">${p.color}</div>
+                        <div class="product-name">${p.name}</div>
+                        <div class="product-price">${p.price.toFixed(2)} AZN</div>
                         <button class="btn-add" onclick="addToCart(${p.id})">SƏBƏTƏ AT</button>
                     </div>
                 </div>
             `).join('');
 
-            // Trigger animation
             setTimeout(() => {
                 document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
-            }, 100);
+            }, 50);
         }
 
         function addToCart(id) {
             const product = products.find(p => p.id === id);
             const inCart = cart.find(item => item.id === id);
-            
             if(inCart) inCart.qty++;
             else cart.push({...product, qty: 1});
-            
             updateCartUI();
             toggleCart(true);
         }
@@ -366,7 +322,7 @@
             let total = 0, count = 0;
 
             if (cart.length === 0) {
-                container.innerHTML = `<div style="text-align:center; opacity:0.5; margin-top:50px;">Səbətiniz boşdur</div>`;
+                container.innerHTML = `<div style="text-align:center; opacity:0.5; margin-top:40px; font-size:0.9rem;">Səbətiniz boşdur</div>`;
                 badge.style.display = 'none';
             } else {
                 badge.style.display = 'flex';
@@ -374,22 +330,21 @@
                     total += item.price * item.qty;
                     count += item.qty;
                     return `
-                        <div style="display:flex; gap:12px; margin-bottom:15px; align-items:center; background:var(--bg-color); padding:10px; border-radius:10px;">
-                            <img src="${item.image}" style="width:50px; height:50px; border-radius:6px; object-fit:cover;">
+                        <div style="display:flex; gap:12px; margin-bottom:12px; align-items:center;">
+                            <img src="${item.image}" style="width:45px; height:45px; border-radius:6px; object-fit:cover;">
                             <div style="flex:1;">
-                                <div style="font-weight:700; font-size:13px;">${item.name}</div>
-                                <div style="font-size:12px; opacity:0.7;">${item.price.toFixed(2)} AZN</div>
+                                <div style="font-weight:700; font-size:12px;">${item.name}</div>
+                                <div style="font-size:11px; opacity:0.7;">${item.price.toFixed(2)} AZN</div>
                             </div>
                             <div style="display:flex; align-items:center; gap:8px;">
-                                <button onclick="updateQty(${item.id}, -1)" style="width:22px; height:22px; border-radius:50%; border:1px solid var(--border-color); background:none; color:var(--text-primary); cursor:pointer;">-</button>
-                                <span style="font-size:13px; font-weight:700;">${item.qty}</span>
-                                <button onclick="updateQty(${item.id}, 1)" style="width:22px; height:22px; border-radius:50%; border:1px solid var(--border-color); background:none; color:var(--text-primary); cursor:pointer;">+</button>
+                                <button onclick="updateQty(${item.id}, -1)" style="width:20px; height:20px; border-radius:50%; border:1px solid var(--border-color); background:none; color:var(--text-primary);">-</button>
+                                <span style="font-size:12px; font-weight:700;">${item.qty}</span>
+                                <button onclick="updateQty(${item.id}, 1)" style="width:20px; height:20px; border-radius:50%; border:1px solid var(--border-color); background:none; color:var(--text-primary);">+</button>
                             </div>
                         </div>
                     `;
                 }).join('');
             }
-
             document.getElementById('cart-total-price').innerText = total.toFixed(2) + " AZN";
             badge.innerText = count;
         }
@@ -422,29 +377,22 @@
         function checkout() {
             if(cart.length === 0) return;
             let msg = `*YENİ SİFARİŞ (N GALLERY)*\n━━━━━━━━━━━━━━\n\n`;
-            cart.forEach((i, idx) => {
-                msg += `${idx + 1}. *${i.name}* (${i.color})\n`;
-                msg += `   ${i.qty} ədəd x ${i.price} AZN\n`;
-            });
-            msg += `\n*CƏMİ:* ${document.getElementById('cart-total-price').innerText}\n\nÜnvan: 28 May metronu yaxınlığı, Peron Gallery.`;
+            cart.forEach((i, idx) => { msg += `${idx + 1}. *${i.name}* (${i.color})\n   ${i.qty} ədəd x ${i.price} AZN\n`; });
+            msg += `\n*CƏMİ:* ${document.getElementById('cart-total-price').innerText}`;
             window.open(`https://wa.me/994773313327?text=${encodeURIComponent(msg)}`);
         }
 
-        // Loader
         window.addEventListener('load', () => {
             const bar = document.getElementById('load-bar');
             let p = 0;
             const int = setInterval(() => {
-                p += 5;
+                p += 10;
                 bar.style.width = p + "%";
                 if(p >= 100) {
                     clearInterval(int);
-                    setTimeout(() => {
-                        document.getElementById('loader').classList.add('hidden');
-                        renderProducts();
-                    }, 200);
+                    setTimeout(() => { document.getElementById('loader').classList.add('hidden'); renderProducts(); }, 150);
                 }
-            }, 20);
+            }, 30);
         });
     </script>
 </body>
